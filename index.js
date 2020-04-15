@@ -6,7 +6,21 @@ addEventListener('fetch', event => {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  return new Response('Hello worker!', {
-    headers: { 'content-type': 'text/plain' },
-  })
+  let variantUrls, randomNum = Math.round(Math.random());
+
+  await fetch('https://cfw-takehome.developers.workers.dev/api/variants').then((response) => {
+    return response.json();
+  }).then((data) => {
+    variantUrls = data;
+    return data;
+  });
+
+  return new Response(
+    await fetch(`${variantUrls.variants[randomNum]}`, {
+      redirect: `follow`,
+    }).then((response) => {
+      return response;
+    })
+  )
 }
+
