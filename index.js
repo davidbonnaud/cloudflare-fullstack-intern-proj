@@ -17,6 +17,26 @@ async function handleRequest(request) {
 
   let randomUrl = variantUrls.variants[randomNum];
 
-  return fetch(randomUrl);
+  class h1Handler {
+    element(element) {
+      element.setInnerContent(`Hi this is page ${randomNum + 1}`);
+      
+    }
+  }
+
+  class pHandler {
+    element(element) {
+      element.setInnerContent('This has been edited! Here is a link to my website:');
+    }
+  }
+
+  class aHandler {
+    element(element) {
+      element.setInnerContent('Visit davidbonnaud.com');
+      element.setAttribute('href', "http://davidbonnaud.com/");
+    }
+  }
+
+  return new HTMLRewriter().on('h1', new h1Handler()).on('p', new pHandler()).on('a', new aHandler()).transform(await fetch(randomUrl));
 }
 
