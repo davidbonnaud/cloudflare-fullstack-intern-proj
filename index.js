@@ -15,12 +15,8 @@ async function handleRequest(request) {
     return data;
   });
 
-  return new Response(
-    await fetch(`${variantUrls.variants[randomNum]}`, {
-      redirect: `follow`,
-    }).then((response) => {
-      return response;
-    })
-  )
+  let randomUrl = variantUrls.variants[randomNum];
+
+  return fetch(randomUrl);
 }
 
